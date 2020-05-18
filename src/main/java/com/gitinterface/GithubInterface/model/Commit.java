@@ -9,7 +9,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class Commit {
 
-    private String name;
+    private String sha;
+    private String url;
 }

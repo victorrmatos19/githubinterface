@@ -9,7 +9,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class Branch {
 
     private String name;
+    private Commit commit;
+    private boolean _protected;
 }

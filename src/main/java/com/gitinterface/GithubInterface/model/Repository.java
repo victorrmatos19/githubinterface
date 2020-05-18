@@ -1,14 +1,16 @@
 package com.gitinterface.GithubInterface.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.ToString;
+import lombok.NoArgsConstructor;
 
 import java.util.Map;
 
 @Getter
 @Builder
-@ToString
+@AllArgsConstructor
+@NoArgsConstructor
 public class Repository {
 
     private String name;

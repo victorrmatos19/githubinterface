@@ -1,5 +1,6 @@
 package com.gitinterface.GithubInterface.controllers;
 
+import com.gitinterface.GithubInterface.model.Branch;
 import com.gitinterface.GithubInterface.model.Repository;
 import com.gitinterface.GithubInterface.services.GithubService;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -34,6 +36,16 @@ public class GitHubController {
         if(!Objects.isNull(languages)){
             log.info("Get language(s) with success: {}");
             return ResponseEntity.ok(languages);
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/listBranchsFromRepository")
+    public ResponseEntity<List<Branch>> listBranchsFromRepository(@RequestBody Repository repository) {
+        List<Branch> branches = githubService.listBranchesFromRepository(repository);
+        if(!Objects.isNull(branches)){
+            log.info("Get branch(s) with success: {}");
+            return ResponseEntity.ok(branches);
         }
         return ResponseEntity.notFound().build();
     }
