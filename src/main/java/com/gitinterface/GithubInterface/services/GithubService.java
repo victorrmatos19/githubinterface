@@ -41,4 +41,13 @@ public interface GithubService {
      */
     List<Commit> listCommitsFromRepository(Repository repository);
 
+    /**
+     * Get commitf rom repository by id
+     *
+     * @param repository - Repository data
+     *
+     * @return commit.
+     */
+    Commit getCommitFromRepositoryById(Repository repository, String commitId);
+
 }

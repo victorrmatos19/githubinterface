@@ -72,6 +72,28 @@ public class GithubServiceImpl implements GithubService {
         }
     }
 
+    @Override
+    public Commit getCommitFromRepositoryById(Repository repository, String commitId) {
+        try {
+            String url = buildCommitFromRepositoryUrl(repository,commitId);
+            log.info("Accessing that url path: {}", url);
+            return restTemplate.getForObject(url,Commit.class);
+        } catch (RestClientException e){
+            log.error("Error when get commit from repository: {}",e.getMessage());
+            return null;
+        }
+    }
+
+    private String buildCommitFromRepositoryUrl(Repository repository, String commitId){
+        return applicationProperties.getGithubApiUrl() +
+                REPOS + "/" +
+                getNameFromOwner(repository.getOwner()) + "/" +
+                getNameFromRepository(repository) + "/" +
+                COMMITS + "/" +
+                commitId;
+    }
+
+
     private String buildListCommitsFromRepositoryUrl(Repository repository){
         return applicationProperties.getGithubApiUrl() +
                 REPOS + "/" +
