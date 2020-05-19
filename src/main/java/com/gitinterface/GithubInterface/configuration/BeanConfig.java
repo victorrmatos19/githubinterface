@@ -1,7 +1,6 @@
 package com.gitinterface.GithubInterface.configuration;
 
 import com.gitinterface.GithubInterface.services.GithubService;
-import com.gitinterface.GithubInterface.services.impl.GithubServiceImpl;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,7 +11,7 @@ public class BeanConfig {
 
     @Bean
     public GithubService getGithubService(){
-        return new GithubServiceImpl();
+        return new GithubService();
     }
 
     @Bean
