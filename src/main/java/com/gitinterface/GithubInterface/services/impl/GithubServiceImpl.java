@@ -5,6 +5,10 @@ import com.gitinterface.GithubInterface.model.Branch;
 import com.gitinterface.GithubInterface.model.Commit;
 import com.gitinterface.GithubInterface.model.Repository;
 import com.gitinterface.GithubInterface.model.User;
+import com.gitinterface.GithubInterface.model.requests.GetCommitFromRepositoryByIdRequest;
+import com.gitinterface.GithubInterface.model.requests.ListBranchesFromRepositoryRequest;
+import com.gitinterface.GithubInterface.model.requests.ListCommitsFromRepositoryRequest;
+import com.gitinterface.GithubInterface.model.requests.ListLanguagesFromRepositoryRequest;
 import com.gitinterface.GithubInterface.services.GithubService;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -25,11 +29,6 @@ import java.util.Map;
 @Setter
 public class GithubServiceImpl implements GithubService {
 
-    private static final String REPOS = "repos";
-    private static final String LANGUAGES = "languages";
-    private static final String BRANCHES = "branches";
-    private static final String COMMITS = "commits";
-
     @Autowired
     private RestTemplate restTemplate;
 
@@ -39,7 +38,7 @@ public class GithubServiceImpl implements GithubService {
     @Override
     public Map<String, Object> listLanguagesFromRepository(Repository repository) {
         try {
-            String url = buildListLanguagesFromRepositoryUrl(repository);
+            String url = ListLanguagesFromRepositoryRequest.buildRequest(repository,applicationProperties.getGithubApiUrl());
             log.info("Accessing that url path: {}", url);
             return restTemplate.getForObject(url,Map.class);
         } catch (RestClientException e){
@@ -51,7 +50,7 @@ public class GithubServiceImpl implements GithubService {
     @Override
     public List<Branch> listBranchesFromRepository(Repository repository) {
         try {
-            String url = buildListBranchesFromRepositoryUrl(repository);
+            String url = ListBranchesFromRepositoryRequest.buildRequest(repository,applicationProperties.getGithubApiUrl());
             log.info("Accessing that url path: {}", url);
             return restTemplate.getForObject(url,List.class);
         } catch (RestClientException e){
@@ -63,7 +62,7 @@ public class GithubServiceImpl implements GithubService {
     @Override
     public List<Commit> listCommitsFromRepository(Repository repository) {
         try {
-            String url = buildListCommitsFromRepositoryUrl(repository);
+            String url = ListCommitsFromRepositoryRequest.buildRequest(repository, applicationProperties.getGithubApiUrl());
             log.info("Accessing that url path: {}", url);
             return restTemplate.getForObject(url,List.class);
         } catch (RestClientException e){
@@ -75,52 +74,12 @@ public class GithubServiceImpl implements GithubService {
     @Override
     public Commit getCommitFromRepositoryById(Repository repository, String commitId) {
         try {
-            String url = buildCommitFromRepositoryUrl(repository,commitId);
+            String url = GetCommitFromRepositoryByIdRequest.buildRequest(repository,commitId, applicationProperties.getGithubApiUrl());
             log.info("Accessing that url path: {}", url);
             return restTemplate.getForObject(url,Commit.class);
         } catch (RestClientException e){
             log.error("Error when get commit from repository: {}",e.getMessage());
             return null;
         }
-    }
-
-    private String buildCommitFromRepositoryUrl(Repository repository, String commitId){
-        return applicationProperties.getGithubApiUrl() +
-                REPOS + "/" +
-                getNameFromOwner(repository.getOwner()) + "/" +
-                getNameFromRepository(repository) + "/" +
-                COMMITS + "/" +
-                commitId;
-    }
-
-
-    private String buildListCommitsFromRepositoryUrl(Repository repository){
-        return applicationProperties.getGithubApiUrl() +
-                REPOS + "/" +
-                getNameFromOwner(repository.getOwner()) + "/" +
-                getNameFromRepository(repository) + "/" +
-                COMMITS;
-    }
-
-    private String buildListLanguagesFromRepositoryUrl(Repository repository){
-        return applicationProperties.getGithubApiUrl() +
-                REPOS + "/" +
-                getNameFromOwner(repository.getOwner()) + "/" +
-                getNameFromRepository(repository) + "/" +
-                LANGUAGES;
-    }
-
-    private String buildListBranchesFromRepositoryUrl(Repository repository){
-        return applicationProperties.getGithubApiUrl() +
-                REPOS + "/" +
-                getNameFromOwner(repository.getOwner()) + "/" +
-                getNameFromRepository(repository) + "/" +
-                BRANCHES;
-    }
-
-    private String getNameFromRepository(Repository repository){ return repository.getName(); }
-
-    private String getNameFromOwner(User user){
-        return user.getName();
     }
 }
