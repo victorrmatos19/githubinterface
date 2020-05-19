@@ -16,7 +16,7 @@ public class Commit {
     private String sha;
     private String url;
     private String node_id;
-    private CommitDTO commitDTO;
+    private CommitDTO commit;
     private String html_url;
     private String comments_url;
     private Author author;
