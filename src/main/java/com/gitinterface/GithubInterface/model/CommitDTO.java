@@ -5,22 +5,17 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Commit {
+public class CommitDTO {
 
-    private String sha;
-    private String url;
-    private String node_id;
-    private CommitDTO commitDTO;
-    private String html_url;
-    private String comments_url;
     private Author author;
     private Commiter commiter;
-    private List<Parent> parents;
-
+    private String message;
+    private Tree tree;
+    private String url;
+    private int comment_count;
+    private Verification verification;
 }

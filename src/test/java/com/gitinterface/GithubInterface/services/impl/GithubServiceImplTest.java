@@ -90,6 +90,32 @@ public class GithubServiceImplTest {
         assertNull(branches);
     }
 
+    @Test
+    @DisplayName("5.listCommitsFromRepository: Should return a commits list with success")
+    public void listCommitsFromRepositoryWithSuccess(){
+        when(applicationProperties.getGithubApiUrl()).thenReturn(GIT_PATH);
+        when(restTemplate.getForObject(anyString(), any())).thenReturn(createCommitList());
+        List<Commit> commits = githubServiceImpl.listCommitsFromRepository(createRepository());
+        assertEquals(commits.size(),2);
+        assertFalse(commits.isEmpty());
+    }
+
+    @Test
+    @DisplayName("6.listCommitsFromRepository: Should return a commits list with error")
+    public void listCommitsFromRepositoryWithError(){
+        when(applicationProperties.getGithubApiUrl()).thenReturn(GIT_PATH);
+        when(restTemplate.getForObject(anyString(), any())).thenThrow(RestClientException.class);
+        List<Commit> commits = githubServiceImpl.listCommitsFromRepository(createRepository());
+        assertNull(commits);
+    }
+
+    private List<Commit> createCommitList() {
+        List<Commit> commits = new ArrayList<>();
+        commits.add(createCommit());
+        commits.add(createCommit());
+        return commits;
+    }
+
     private List<Branch> createBranchList() {
         List<Branch> branchList = new ArrayList<>();
         branchList.add(createBranch());
