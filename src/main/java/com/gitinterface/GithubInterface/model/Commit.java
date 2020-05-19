@@ -20,7 +20,7 @@ public class Commit {
     private String html_url;
     private String comments_url;
     private Author author;
-    private Commiter commiter;
+    private Commiter committer;
     private List<Parent> parents;
 
 }

@@ -7,10 +7,7 @@ import com.gitinterface.GithubInterface.services.GithubService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -57,6 +54,16 @@ public class GitHubController {
         if(!Objects.isNull(commits)){
             log.info("Get commit(s) with success: {}");
             return ResponseEntity.ok(commits);
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/getCommitFromRepositoryById")
+    public ResponseEntity<Commit> getCommitFromRepositoryById(@RequestBody Repository repository, @RequestParam String commitId) {
+        Commit commit = githubService.getCommitFromRepositoryById(repository,commitId);
+        if(!Objects.isNull(commit)){
+            log.info("Get commit with success: {}");
+            return ResponseEntity.ok(commit);
         }
         return ResponseEntity.notFound().build();
     }

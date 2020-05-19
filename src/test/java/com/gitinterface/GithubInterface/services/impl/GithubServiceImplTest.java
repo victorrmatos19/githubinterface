@@ -36,6 +36,7 @@ public class GithubServiceImplTest {
     private static final String USER_NAME = "userName";
     private static final String GIT_PATH = "gitPath";
     private static final String BRANCH_NAME = "branchName";
+    private static final String COMMIT_ID = "commitId";
 
     @InjectMocks
     private GithubServiceImpl githubServiceImpl;
@@ -107,6 +108,24 @@ public class GithubServiceImplTest {
         when(restTemplate.getForObject(anyString(), any())).thenThrow(RestClientException.class);
         List<Commit> commits = githubServiceImpl.listCommitsFromRepository(createRepository());
         assertNull(commits);
+    }
+
+    @Test
+    @DisplayName("7.getCommitFromRepositoryById: Should return a commit with success")
+    public void getCommitFromRepositoryByIdWithSuccess(){
+        when(applicationProperties.getGithubApiUrl()).thenReturn(GIT_PATH);
+        when(restTemplate.getForObject(anyString(), any())).thenReturn(createCommit());
+        Commit commit = githubServiceImpl.getCommitFromRepositoryById(createRepository(),COMMIT_ID);
+        assertNotNull(commit);
+    }
+
+    @Test
+    @DisplayName("8.getCommitFromRepositoryById: Should return a commit with error")
+    public void getCommitFromRepositoryByIdWithError(){
+        when(applicationProperties.getGithubApiUrl()).thenReturn(GIT_PATH);
+        when(restTemplate.getForObject(anyString(), any())).thenThrow(RestClientException.class);
+        Commit commit = githubServiceImpl.getCommitFromRepositoryById(createRepository(),COMMIT_ID);
+        assertNull(commit);
     }
 
     private List<Commit> createCommitList() {
