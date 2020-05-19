@@ -1,6 +1,7 @@
 package com.gitinterface.GithubInterface.controllers;
 
 import com.gitinterface.GithubInterface.model.Branch;
+import com.gitinterface.GithubInterface.model.Commit;
 import com.gitinterface.GithubInterface.model.Repository;
 import com.gitinterface.GithubInterface.services.GithubService;
 import lombok.extern.slf4j.Slf4j;
@@ -46,6 +47,16 @@ public class GitHubController {
         if(!Objects.isNull(branches)){
             log.info("Get branch(s) with success: {}");
             return ResponseEntity.ok(branches);
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/listCommitsFromRepository")
+    public ResponseEntity<List<Commit>> listCommitsFromRepository(@RequestBody Repository repository) {
+        List<Commit> commits = githubService.listCommitsFromRepository(repository);
+        if(!Objects.isNull(commits)){
+            log.info("Get commit(s) with success: {}");
+            return ResponseEntity.ok(commits);
         }
         return ResponseEntity.notFound().build();
     }

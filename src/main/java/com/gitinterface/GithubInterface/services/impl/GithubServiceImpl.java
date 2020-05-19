@@ -2,6 +2,7 @@ package com.gitinterface.GithubInterface.services.impl;
 
 import com.gitinterface.GithubInterface.configuration.ApplicationProperties;
 import com.gitinterface.GithubInterface.model.Branch;
+import com.gitinterface.GithubInterface.model.Commit;
 import com.gitinterface.GithubInterface.model.Repository;
 import com.gitinterface.GithubInterface.model.User;
 import com.gitinterface.GithubInterface.services.GithubService;
@@ -27,6 +28,7 @@ public class GithubServiceImpl implements GithubService {
     private static final String REPOS = "repos";
     private static final String LANGUAGES = "languages";
     private static final String BRANCHES = "branches";
+    private static final String COMMITS = "commits";
 
     @Autowired
     private RestTemplate restTemplate;
@@ -56,6 +58,26 @@ public class GithubServiceImpl implements GithubService {
             log.error("Error when get branches from repository: {}",e.getMessage());
             return null;
         }
+    }
+
+    @Override
+    public List<Commit> listCommitsFromRepository(Repository repository) {
+        try {
+            String url = buildListCommitsFromRepositoryUrl(repository);
+            log.info("Accessing that url path: {}", url);
+            return restTemplate.getForObject(url,List.class);
+        } catch (RestClientException e){
+            log.error("Error when get commits from repository: {}",e.getMessage());
+            return null;
+        }
+    }
+
+    private String buildListCommitsFromRepositoryUrl(Repository repository){
+        return applicationProperties.getGithubApiUrl() +
+                REPOS + "/" +
+                getNameFromOwner(repository.getOwner()) + "/" +
+                getNameFromRepository(repository) + "/" +
+                COMMITS;
     }
 
     private String buildListLanguagesFromRepositoryUrl(Repository repository){

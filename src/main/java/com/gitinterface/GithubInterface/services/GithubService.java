@@ -1,6 +1,7 @@
 package com.gitinterface.GithubInterface.services;
 
 import com.gitinterface.GithubInterface.model.Branch;
+import com.gitinterface.GithubInterface.model.Commit;
 import com.gitinterface.GithubInterface.model.Repository;
 
 import java.util.List;
@@ -30,5 +31,14 @@ public interface GithubService {
      * @return List branches.
      */
     List<Branch> listBranchesFromRepository(Repository repository);
+
+    /**
+     * Get commits from repository
+     *
+     * @param repository - Repository data
+     *
+     * @return List commits.
+     */
+    List<Commit> listCommitsFromRepository(Repository repository);
 
 }
