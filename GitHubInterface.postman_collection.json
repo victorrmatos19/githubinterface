@@ -1,0 +1,148 @@
+{
+	"info": {
+		"_postman_id": "d2dd8429-a5ff-40b4-9767-949b8eee00e7",
+		"name": "GitHubInterface",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "List repository language (s)",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"myFlutterApp\",\n    \"owner\": {\n        \"name\": \"victorrmatos19\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/github/listLanguagesFromRepository",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"github",
+						"listLanguagesFromRepository"
+					]
+				},
+				"description": "List repository languages"
+			},
+			"response": []
+		},
+		{
+			"name": "List repository branch(s)",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"myFlutterApp\",\n    \"owner\": {\n        \"name\": \"victorrmatos19\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/github/listBranchsFromRepository",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"github",
+						"listBranchsFromRepository"
+					]
+				},
+				"description": "List repository branch(s)"
+			},
+			"response": []
+		},
+		{
+			"name": "List repository commit(s)",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"githubinterface\",\n    \"owner\": {\n        \"name\": \"victorrmatos19\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/github/listCommitsFromRepository",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"github",
+						"listCommitsFromRepository"
+					]
+				},
+				"description": "List repository commit(s)"
+			},
+			"response": []
+		},
+		{
+			"name": "Get commit from repository by id",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"githubinterface\",\n    \"owner\": {\n        \"name\": \"victorrmatos19\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/github/getCommitFromRepositoryById?commitId=c86fb47ccef254386206a341be7ca4a38f1830f8",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"github",
+						"getCommitFromRepositoryById"
+					],
+					"query": [
+						{
+							"key": "commitId",
+							"value": "c86fb47ccef254386206a341be7ca4a38f1830f8"
+						}
+					]
+				},
+				"description": "Get commit from repository by id"
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
